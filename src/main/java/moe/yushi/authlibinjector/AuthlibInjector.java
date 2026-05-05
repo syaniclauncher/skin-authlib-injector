@@ -74,6 +74,10 @@ import moe.yushi.authlibinjector.yggdrasil.CustomYggdrasilAPIProvider;
 import moe.yushi.authlibinjector.yggdrasil.MojangYggdrasilAPIProvider;
 import moe.yushi.authlibinjector.yggdrasil.YggdrasilClient;
 
+// <@xsyanic> Dependencies added by me :)
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
+
 public final class AuthlibInjector {
 	private AuthlibInjector() {}
 
@@ -131,6 +135,9 @@ public final class AuthlibInjector {
 		log(INFO, "Authentication server: " + apiUrl);
 		warnIfHttp(apiUrl);
 
+		// <@xsyanic> Remember the requested API root so fallback metadata can still point to the chosen auth server.
+		String requestedApiRoot = apiUrl.endsWith("/") ? apiUrl : apiUrl + "/";
+
 		String metadataResponse;
 
 		Optional<String> prefetched = getPrefetchedResponse();
@@ -177,7 +184,9 @@ public final class AuthlibInjector {
 				}
 			} catch (IOException e) {
 				log(ERROR, "Failed to fetch metadata: " + e);
-				throw new InitializationException(e);
+				log(WARNING, "Metadata fetch failed, continuing game launch with offline fallback metadata");
+				// <@xsyanic> If the auth server cannot be reached, launch with fallback metadata.
+				return createOfflineFallbackMetadata(requestedApiRoot);
 			}
 
 		}
@@ -199,6 +208,13 @@ public final class AuthlibInjector {
 		}
 		log(DEBUG, "Parsed metadata: " + metadata);
 		return metadata;
+	}
+
+	// <@xsyanic> When the metadata could not be fetched, we still want to allow the game to launch.
+	private static APIMetadata createOfflineFallbackMetadata(String apiRoot) {
+		log(WARNING, "Game will launch with offline fallback metadata as the authentication server set is unreachable, but online skin features may be limited until the next successful launch.");
+		//return new APIMetadata(apiRoot, emptyList(), emptyMap(), Optional.empty());
+		return new APIMetadata(apiRoot, emptyList(), singletonMap("serverName", "Offline"), Optional.empty());
 	}
 
 	private static void warnIfHttp(String url) {
