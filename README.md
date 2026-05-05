@@ -1,21 +1,22 @@
 # skin-authlib-injector
 
-A fork of **authlib-injector** that only proxies skins & capes and keeps the original Minecraft authentication.
+A minecraft launcher-ready fork of **authlib-injector** that only proxies skins & capes and keeps the original Minecraft authentication, used by Syanic Launcher itself.
 
-
+## Credits & Acknowledgement
+- [@yushijinhun](https://github.com/yushijinhun) Creator of **authlib-injector**
+- Contributors & Developers of [yushijinhun/authlib-injector](https://github.com/yushijinhun/authlib-injector/graphs/contributors)
 
 ## Changes
+- Commit [chg: Disable the auth server and add the session server filter](https://github.com/syaniclauncher/skin-authlib-injector/commit/8303f3c4bd542955df3250ef4ee57d24b0586ccd)
+    * Removed proxy for `authserver.mojang.com` (uses original servers)
+    * Limited proxy for `sessionserver.mojang.com` to skins only (auth goes to original servers)
+- Commit [add: Allow launching the game offline when the server is unreachable](https://github.com/syaniclauncher/skin-authlib-injector/commit/53f083d4245543aa8d8822dbff32e56490afa74b)
+    * Loads the game in offline mode (“Offline” serverName) if the server is unreachable, instead of crashing the game like the original authlib.
 
-* Removed proxy for `authserver.mojang.com` (uses original servers)
-* Limited proxy for `sessionserver.mojang.com` to skins only (auth goes to original servers)
-* Loads the game in offline mode (“Offline” serverName) if the server is unreachable, instead of crashing the game like the original authlib.
+> If you want to use this in your own project or minecraft launcher, I completely promote it, as I rather support communities instead of companies :) ~@xsyanic
 
 
-
-> If you want to use this in your own project or minecraft launcher, I completely promote it as I rather support communities instead of companies :) ~@xsyanic
-
-
-> Detailed Wiki for setting up the server would be available soon..
+> Detailed Wiki for setting up the server would be available soon to setup the server and routes..
 
 ## Download
 You can download the latest authlib-injector build from [here](https://github.com/syaniclauncher/skin-authlib-injector/releases).
@@ -35,7 +36,7 @@ Build output can be found in `build/libs`.
 ## Deploy
 Configure Minecraft server with the following JVM parameter:
 ```
--javaagent:{/path/to/authlib-injector.jar}={Server URL}
+-javaagent:{/path/to/skin-authlib-injector.jar}={Server URL}
 ```
 
 ## Options
