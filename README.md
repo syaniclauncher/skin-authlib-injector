@@ -7,9 +7,15 @@ A fork of **authlib-injector** that only proxies skins & capes and keeps the ori
 ## Changes
 
 * Removed proxy for `authserver.mojang.com` (uses original servers)
-* Limited proxt for `sessionserver.mojang.com` to skins only (auth goes to original servers)
+* Limited proxy for `sessionserver.mojang.com` to skins only (auth goes to original servers)
+* Loads the game in offline mode (“Offline” serverName) if the server is unreachable, instead of crashing the game like the original authlib.
 
-> Wiki for the APIs would be available soon..
+
+
+> If you want to use this in your own project or minecraft launcher, I completely promote it as I rather support communities instead of companies :) ~@xsyanic
+
+
+> Detailed Wiki for setting up the server would be available soon..
 
 ## Download
 You can download the latest authlib-injector build from [here](https://github.com/syaniclauncher/skin-authlib-injector/releases).
