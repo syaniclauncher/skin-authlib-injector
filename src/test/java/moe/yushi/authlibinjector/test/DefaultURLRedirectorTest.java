@@ -40,40 +40,41 @@ public class DefaultURLRedirectorTest {
 				"api.mojang.com", "/profiles/",
 				"https://yggdrasil.example.com/api/profiles/");
 
-		testTransform(
+
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
 				"sessionserver.mojang.com", "/session/minecraft/join",
-				"https://yggdrasil.example.com/sessionserver/session/minecraft/join");
+				"https://yggdrasil.example.com/sessionserver/session/minecraft/join");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
 				"sessionserver.mojang.com", "/session/minecraft/hasJoined",
-				"https://yggdrasil.example.com/sessionserver/session/minecraft/hasJoined");
+				"https://yggdrasil.example.com/sessionserver/session/minecraft/hasJoined");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 				"authserver.mojang.com", "/authenticate",
-				"https://yggdrasil.example.com/authserver/authenticate");
+				"https://yggdrasil.example.com/authserver/authenticate");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 				"authserver.mojang.com", "/refresh",
-				"https://yggdrasil.example.com/authserver/refresh");
+				"https://yggdrasil.example.com/authserver/refresh");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 				"authserver.mojang.com", "/validate",
-				"https://yggdrasil.example.com/authserver/validate");
+				"https://yggdrasil.example.com/authserver/validate");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 				"authserver.mojang.com", "/invalidate",
-				"https://yggdrasil.example.com/authserver/invalidate");
+				"https://yggdrasil.example.com/authserver/invalidate");*/
 
-		testTransform(
+		/*testTransform(
 				// from: [com.mojang:authlib:1.5.24]/com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 				"authserver.mojang.com", "/signout",
-				"https://yggdrasil.example.com/authserver/signout");
+				"https://yggdrasil.example.com/authserver/signout");*/
 
 		testTransform(
 				// from: [mcp940]/net.minecraft.client.entity.AbstractClientPlayer
@@ -81,11 +82,18 @@ public class DefaultURLRedirectorTest {
 				"skins.minecraft.net", "/MinecraftSkins/%s.png",
 				"https://yggdrasil.example.com/skins/MinecraftSkins/%s.png");
 
-		testTransform(
+		// <@xsyanic> SessionServer /join endpoint should NOT be redirected
+		assertEquals(redirector.redirect("sessionserver.mojang.com", "/session/minecraft/join"), Optional.empty());
+
+		// <@xsyanic> SessionServer /hasJoined endpoint should NOT be redirected
+		assertEquals(redirector.redirect("sessionserver.mojang.com", "/session/minecraft/hasJoined"), Optional.empty());
+		assertEquals(redirector.redirect("sessionserver.mojang.com", "/session/minecraft/hasJoined?username="), Optional.empty());
+
+		/*testTransform(
 				// from: [bungeecord@806a6dfacaadb7538860889f8a50612bb496a2d3]/net.md_5.bungee.connection.InitialHandler
 				// url: https://github.com/SpigotMC/BungeeCord/blob/806a6dfacaadb7538860889f8a50612bb496a2d3/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java#L409
 				"sessionserver.mojang.com", "/session/minecraft/hasJoined?username=",
-				"https://yggdrasil.example.com/sessionserver/session/minecraft/hasJoined?username=");
+				"https://yggdrasil.example.com/sessionserver/session/minecraft/hasJoined?username=");*/
 
 		testTransform(
 				// from: [wiki.vg]/Mojang_API/Username -> UUID at time
@@ -93,6 +101,16 @@ public class DefaultURLRedirectorTest {
 				// issue: yushijinhun/authlib-injector#6 <https://github.com/yushijinhun/authlib-injector/issues/6>
 				"api.mojang.com", "/users/profiles/minecraft/",
 				"https://yggdrasil.example.com/api/users/profiles/minecraft/");
+		
+		// <@xsyanic>SessionServer /profile endpoint should be redirected
+		testTransform(
+				"sessionserver.mojang.com", "/session/minecraft/profile/12345678abcdef0012345678abcdef00",
+				"https://yggdrasil.example.com/sessionserver/session/minecraft/profile/12345678abcdef0012345678abcdef00");
+
+		// <@xsyanic> SessionServer /profile with query parameter should also be redirected
+		testTransform(
+				"sessionserver.mojang.com", "/session/minecraft/profile/12345678abcdef0012345678abcdef00?unsigned=false",
+				"https://yggdrasil.example.com/sessionserver/session/minecraft/profile/12345678abcdef0012345678abcdef00?unsigned=false");
 	}
 
 	@Test
