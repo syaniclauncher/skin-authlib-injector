@@ -44,11 +44,18 @@ footer a { color: #007bff; text-decoration: none; }
 <footer>by <a href="https://github.com/xsyanic">@xsyanic (GitHub)</a></footer>
 
 <script>
-fetch("artifact/latest.json", { cache: "no-cache" })
-.then(r => {
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    return r.json();
-})
+function fetchLatest(retries) {
+    return fetch("artifact/latest.json", { cache: "no-cache" })
+        .then(r => {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+        })
+        .catch(error => retries
+            ? new Promise(resolve => setTimeout(resolve, 1000)).then(() => fetchLatest(retries - 1))
+            : Promise.reject(error));
+}
+
+fetchLatest(10)
 .then(data => {
     document.getElementById("filename").textContent = data.download_url.split("/").pop();
     document.getElementById("version").textContent = data.version;
