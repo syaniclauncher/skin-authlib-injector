@@ -23,11 +23,9 @@ You can skip all the authentication related endpoints.
 ## Download
 You can download the latest authlib-injector build from [here](https://github.com/syaniclauncher/skin-authlib-injector/releases).
 
-Or use the API url to download the latest release.
+Or use the API to get link to download the latest release.
 
 #### Request: 
-
-`GET https://skinauthlibinjector.syanic.org/artifact/latest.json`
 
 `GET https://syaniclauncher.github.io/skin-authlib-injector/artifact/latest.json`
 
