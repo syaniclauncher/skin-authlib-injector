@@ -25,7 +25,7 @@ footer a { color: #007bff; text-decoration: none; }
 <nav>
 <a href="#">skin-authlib-injector</a>
 <a href="https://github.com/syaniclauncher/skin-authlib-injector/releases" class="active">Releases</a>
-<a href="/artifact/latest.json" class="active">API</a>
+<a href="https://github.com/syaniclauncher/skin-authlib-injector#download" class="active">API</a>
 <a href="https://github.com/syaniclauncher/skin-authlib-injector#wiki">Wiki</a>
 <a href="https://github.com/syaniclauncher/skin-authlib-injector">GitHub</a>
 </nav>
@@ -44,7 +44,7 @@ footer a { color: #007bff; text-decoration: none; }
 <footer>by <a href="https://github.com/xsyanic">@xsyanic (GitHub)</a></footer>
 
 <script>
-fetch("/artifact/latest.json", { cache: "no-cache" })
+fetch("artifact/latest.json", { cache: "no-cache" })
 .then(r => {
     if (!r.ok) throw new Error("HTTP " + r.status);
     return r.json();

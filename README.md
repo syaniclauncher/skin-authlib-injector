@@ -13,13 +13,36 @@ A minecraft launcher-ready fork of **authlib-injector** that only proxies skins 
 - Commit [add: Allow launching the game offline when the server is unreachable](https://github.com/syaniclauncher/skin-authlib-injector/commit/53f083d4245543aa8d8822dbff32e56490afa74b)
     * Loads the game in offline mode (“Offline” serverName) if the server is unreachable, instead of crashing the game like the original authlib.
 
-> If you want to use this in your own project or minecraft launcher, I completely promote it, as I rather support communities instead of companies :) ~@xsyanic
+> If you want to use this in your own project or minecraft launcher, I completely promote it, as I rather support communities instead of companies. ~@xsyanic
 
+## Wiki
+The wiki for implementing the server can be found [here](https://yushijinhun.github.io/authlib-injector/en/yggdrasil-server-technical-specification.html)
 
-> Detailed Wiki for setting up the server would be available soon to setup the server and routes..
+You can skip all the authentication related endpoints. 
 
 ## Download
 You can download the latest authlib-injector build from [here](https://github.com/syaniclauncher/skin-authlib-injector/releases).
+
+Or use the API url to download the latest release.
+
+#### Request: 
+
+`GET https://skinauthlibinjector.syanic.org/artifact/latest.json`
+
+`GET https://syaniclauncher.github.io/skin-authlib-injector/artifact/latest.json`
+
+#### Example Response: 
+```json
+{
+  "build_number": 4,
+  "version": "1.2.8",
+  "release_time": "2026-11-08T22:46:05Z",
+  "download_url": "https://github.com/syaniclauncher/skin-authlib-injector/releases/download/v1.2.8/skin-authlib-injector-1.2.8.jar",
+  "checksums": {
+    "sha256": "6a3a25a6cc665a619c89e5f4a411dd4de1ecec1b82877825d5e0556871a7961d"
+  }
+}
+```
 
 ## Build
 Dependencies: Gradle, JDK 17+. The target Java platform version is 8.
